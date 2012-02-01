@@ -22,8 +22,8 @@ draggable jq drag =
   do jsdrag <- mkJSDraggable drag
      _draggable jq jsdrag
       
-foreign import jscript "{}"
+foreign import js "{}"
   mkJSDraggable :: Draggable -> IO JSDraggable
 
-foreign import jscript "%1.draggable(%2)"
+foreign import js "%1.draggable(%2)"
   _draggable :: JQuery -> JSDraggable -> IO ()

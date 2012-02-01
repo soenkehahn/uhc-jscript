@@ -102,6 +102,6 @@ foreign import prim "primClone"
 foreign import prim "primToPlainObj"
   primToPlainObj :: JSPtr a -> JSPtr b
 
-foreign import jscript "{}"
+foreign import js "{}"
   mkObj :: a -> IO (JSPtr b)
 

@@ -8,53 +8,53 @@ import Language.UHC.JScript.Types
 data BBModelPtr a
 type BBModel a = JSPtr (BBModelPtr a)
 
-foreign import jscript "Backbone.Model.extend(%*)"
+foreign import js "Backbone.Model.extend(%*)"
   extend :: AnonObj -> IO (JSFunPtr b)
 
-foreign import jscript "Backbone.Model.extend(%*)"
+foreign import js "Backbone.Model.extend(%*)"
   extend' :: AnonObj -> AnonObj -> IO (JSFunPtr b)
 
 
 get :: BBModel a -> String -> IO b
 get p s = _get p (toJS s)
 
-foreign import jscript "%1.get(%2)"
+foreign import js "%1.get(%2)"
   _get :: BBModel a -> JSString -> IO b
 
-foreign import jscript "%1.set(%2)"
+foreign import js "%1.set(%2)"
   set :: BBModel a -> AnonObj -> IO ()
 
-foreign import jscript "%1.set(%*)"
+foreign import js "%1.set(%*)"
   set' :: BBModel a -> AnonObj -> AnonObj -> IO ()
 
 escape :: BBModel a -> String -> IO String
 escape p s = fromJSM $ _escape p (toJS s)
 
-foreign import jscript "%1.escape(%2)"
+foreign import js "%1.escape(%2)"
   _escape :: BBModel a -> JSString -> IO JSString
 
 has :: BBModel a -> String -> IO Bool
 has p s = _has p (toJS s)
 
-foreign import jscript "%1.has(%2)"
+foreign import js "%1.has(%2)"
   _has :: BBModel a -> JSString -> IO Bool
 
 unset :: BBModel a -> String -> IO ()
 unset p s = _unset p (toJS s)
 
-foreign import jscript "%1.unset(%2)"
+foreign import js "%1.unset(%2)"
   _unset :: BBModel a -> JSString -> IO ()
 
 unset' :: BBModel a -> String -> AnonObj -> IO ()
 unset' p s o = _unset' p (toJS s) o
 
-foreign import jscript "%1.unset(%*)"
+foreign import js "%1.unset(%*)"
   _unset' :: BBModel a -> JSString -> AnonObj -> IO ()
 
-foreign import jscript "%1.clear()"
+foreign import js "%1.clear()"
   clear :: BBModel a -> IO ()
 
-foreign import jscript "%1.clear(%*)"
+foreign import js "%1.clear(%*)"
   clear' :: BBModel a -> AnonObj -> IO ()
 
 silentOpt :: IO AnonObj
@@ -78,28 +78,28 @@ getModelAttributes = getAttr "attributes"
 
 -- TODO: defaults
 
-foreign import jscript "%1.toJSON()"
+foreign import js "%1.toJSON()"
   toJSON :: BBModel a -> IO AnonObj
 
-foreign import jscript "%1.fetch()"
+foreign import js "%1.fetch()"
   fetch :: BBModel a -> IO ()
 
-foreign import jscript "%1.fetch(%*)"
+foreign import js "%1.fetch(%*)"
   fetch' :: BBModel a -> AnonObj -> IO ()
 
-foreign import jscript "%1.save()"
+foreign import js "%1.save()"
   save :: BBModel a -> IO ()
 
-foreign import jscript "%1.save(%*)"
+foreign import js "%1.save(%*)"
   save' :: BBModel a -> AnonObj -> IO ()
 
-foreign import jscript "%1.save(%*)"
+foreign import js "%1.save(%*)"
   save'' :: BBModel a -> AnonObj -> AnonObj -> IO ()
 
-foreign import jscript "%1.destroy()"
+foreign import js "%1.destroy()"
   destroy :: BBModel a -> IO ()
 
-foreign import jscript "%1.destroy(%*)"
+foreign import js "%1.destroy(%*)"
   destroy' :: BBModel a -> AnonObj -> IO ()
 
 -- TODO: validate
@@ -115,7 +115,7 @@ setValidateFn = setAttr "validate"
 getUrl :: BBModel a -> IO String
 getUrl = fromJSM . _getUrl
 
-foreign import jscript "getUrl(%1)"
+foreign import js "getUrl(%1)"
   _getUrl :: BBModel a -> IO JSString
 
 
@@ -142,36 +142,36 @@ setParseFn :: (AnonObj -> AnonObj) -> BBModel a -> IO (BBModel a)
 setParseFn = setAttr "parse"
 
 
-foreign import jscript "%1.clone()"
+foreign import js "%1.clone()"
   clone :: BBModel a -> IO (BBModel a)
 
-foreign import jscript "%1.isNew()"
+foreign import js "%1.isNew()"
   isNew :: BBModel a -> IO Bool
 
-foreign import jscript "%1.change()"
+foreign import js "%1.change()"
   change :: BBModel a -> IO ()
 
-foreign import jscript "%1.hasChanged()"
+foreign import js "%1.hasChanged()"
   hasChanged :: BBModel a -> IO Bool
 
 hasChanged' :: BBModel a -> String -> IO Bool
 hasChanged' p a = _hasChanged' p (toJS a)
 
-foreign import jscript "%1.hasChanged(%2)"
+foreign import js "%1.hasChanged(%2)"
   _hasChanged' :: BBModel a -> JSString -> IO Bool
 
 
-foreign import jscript "%1.changedAttributes()"
+foreign import js "%1.changedAttributes()"
   changedAttributes :: BBModel a -> IO AnonObj
 
-foreign import jscript "%1.changedAttributes(%2)"
+foreign import js "%1.changedAttributes(%2)"
   changedAttributes' :: BBModel a -> AnonObj -> IO AnonObj
 
 previous :: BBModel a -> String -> IO b
 previous p a = _previous p (toJS a)
 
-foreign import jscript "%1.previous(%2)"
+foreign import js "%1.previous(%2)"
   _previous :: BBModel a -> JSString -> IO b
 
-foreign import jscript "%1.previousAttributes()"
+foreign import js "%1.previousAttributes()"
   previousAttributes :: BBModel a -> IO AnonObj

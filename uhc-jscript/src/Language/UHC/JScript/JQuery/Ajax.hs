@@ -74,11 +74,11 @@ ajax :: (JS r, JS v) => AjaxOptions a -> v -> AjaxCallback r -> AjaxCallback r -
 ajax = ajaxBackend _ajax
                   
                   
-foreign import jscript "wrapper"
+foreign import js "wrapper"
   mkJSAjaxCallback :: AjaxCallback r -> IO (JSAjaxCallback r)
 
 
-foreign import jscript "$.ajax(%1)"
+foreign import js "$.ajax(%1)"
   _ajax :: JSPtr a -> IO ()
   
 noop :: AjaxCallback a

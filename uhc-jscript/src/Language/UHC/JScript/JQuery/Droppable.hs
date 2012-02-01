@@ -18,8 +18,8 @@ droppable jq drop =
   do jsdrop <- mkJSDroppable drop
      _droppable jq jsdrop
       
-foreign import jscript "{}"
+foreign import js "{}"
   mkJSDroppable :: Droppable -> IO JSDroppable
 
-foreign import jscript "%1.droppable(%2)"
+foreign import js "%1.droppable(%2)"
   _droppable :: JQuery -> JSDroppable -> IO ()

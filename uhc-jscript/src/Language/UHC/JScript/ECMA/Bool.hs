@@ -12,8 +12,8 @@ toJSBool :: Bool -> JSBool
 toJSBool True  = _true
 toJSBool False = _false
 
-foreign import jscript "true"
+foreign import js "true"
   _true :: JSBool
   
-foreign import jscript "false"
+foreign import js "false"
   _false :: JSBool

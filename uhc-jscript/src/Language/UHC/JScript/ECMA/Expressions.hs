@@ -7,5 +7,5 @@ import Language.UHC.JScript.Primitives
 typeof :: a -> String
 typeof = fromJS . _typeof
 
-foreign import jscript "typeof(%*)"
+foreign import js "typeof(%*)"
   _typeof :: a -> JSString

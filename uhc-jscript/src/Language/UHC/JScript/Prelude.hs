@@ -11,8 +11,8 @@ import Language.UHC.JScript.Types
 import Language.UHC.JScript.Primitives   
 import Language.UHC.JScript.ECMA.String  
 
-foreign import jscript "wrapper"
+foreign import js "wrapper"
   wrapIO :: IO () -> IO (JSFunPtr (IO ()))
   
-foreign import jscript "wrapper"
+foreign import js "wrapper"
   wrapJSPtraIO :: (JSPtr a -> IO ()) -> IO (JSFunPtr(JSPtr a -> IO ()))  

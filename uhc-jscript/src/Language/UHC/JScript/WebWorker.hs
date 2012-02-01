@@ -8,7 +8,7 @@ type WebWorker = JSPtr WebWorkerPtr
 newWorker :: String -> IO WebWorker
 newWorker = _newWorker . toJS
 
-foreign import jscript "newWorker(%1)"
+foreign import js "newWorker(%1)"
   _newWorker :: JSString -> IO WebWorker
 
 setOnMessage :: WebWorker -> (JSPtr a -> IO ()) -> IO ()
@@ -17,17 +17,17 @@ setOnMessage self f = do
   setAttr "onmessage" f' self
   return ()
   
-foreign import jscript "JSON.stringify(%1)"
+foreign import js "JSON.stringify(%1)"
   jsonStringify :: a -> JSString
 
-foreign import jscript "JSON.parse(%1)"
+foreign import js "JSON.parse(%1)"
   jsonParse :: JSString -> IO a
 
 postMessage :: WebWorker -> a -> IO ()
 postMessage =  _postMessage 
   
-foreign import jscript "%1.postMessage(%2)"
+foreign import js "%1.postMessage(%2)"
   _postMessage :: WebWorker -> a -> IO ()
   
-foreign import jscript "self"
+foreign import js "self"
   getSelf :: IO WebWorker

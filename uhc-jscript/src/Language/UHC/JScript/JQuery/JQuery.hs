@@ -19,54 +19,54 @@ jQuery = _jQuery . toJS
 jQuery' :: String -> JSPtr a -> IO JQuery
 jQuery' s j = _jQuery' (toJS s) j
 
-foreign import jscript "jQuery(%*)"
+foreign import js "jQuery(%*)"
   _jQuery :: JSString -> IO JQuery
 
-foreign import jscript "jQuery(%*)"
+foreign import js "jQuery(%*)"
   _jQuery' :: JSString -> JSPtr a -> IO JQuery
 
-foreign import jscript "jQuery(%*)"
+foreign import js "jQuery(%*)"
   jQueryObj :: JSPtr a -> IO JQuery
 
-foreign import jscript "jQuery()"
+foreign import js "jQuery()"
   jQuery_ :: IO JQuery
 
 
-foreign import jscript "$.holdReady(%*)"
+foreign import js "$.holdReady(%*)"
   holdReady :: Bool -> IO ()
 
-foreign import jscript "$.noConflict()"
+foreign import js "$.noConflict()"
   noConflict :: IO ()
 
-foreign import jscript "$.noConflict(%*)"
+foreign import js "$.noConflict(%*)"
   noConflict' :: Bool -> IO ()
 
-foreign import jscript "jQuery.sub()"
+foreign import js "jQuery.sub()"
   sub :: IO JQuery
 
-foreign import jscript "jQuery.when(%*)"
+foreign import js "jQuery.when(%*)"
   when :: JSPtr a -> IO ()
 
-foreign import jscript "jQuery.when(%*)"
+foreign import js "jQuery.when(%*)"
   when' :: JSPtr a -> JSPtr a -> IO ()
 
-foreign import jscript "jQuery.when(%*)"
+foreign import js "jQuery.when(%*)"
   when'' :: JSPtr a -> JSPtr a -> JSPtr a -> IO ()
 
 -------------------------------------------------------------------------------
 -- Iteration
 
-foreign import jscript "jQuery.makeArray(%1)"
+foreign import js "jQuery.makeArray(%1)"
   jQueryToArray :: JQuery -> IO (JSArray a)
 
-foreign import jscript "%1.each(%2)"
+foreign import js "%1.each(%2)"
   each :: JQuery -> JSFunPtr (Int -> JSPtr a -> IO ()) -> IO ()
 
-foreign import jscript "jQuery.each(%*)"
+foreign import js "jQuery.each(%*)"
   each' ::  b -> JSFunPtr (Int -> JSPtr a -> IO ()) -> IO ()
   
 
-foreign import jscript "wrapper"
+foreign import js "wrapper"
   mkEachIterator :: (Int -> JSPtr a -> IO ()) -> IO (JSFunPtr (Int -> JSPtr a -> IO ()))
   
 -------------------------------------------------------------------------------
@@ -75,23 +75,23 @@ foreign import jscript "wrapper"
 findSelector :: JQuery -> String -> IO JQuery
 findSelector jq = findSelector' jq . toJS
 
-foreign import jscript "%1.find(%2)"
+foreign import js "%1.find(%2)"
   findSelector' :: JQuery -> JSString -> IO JQuery
 
-foreign import jscript "%1.find(%2)"
+foreign import js "%1.find(%2)"
   findObject :: JQuery -> JQuery -> IO JQuery
 
 valString :: JQuery -> IO String
 valString jq = valJSString jq >>= return . fromJS
 
-foreign import jscript "%1.val()"  
+foreign import js "%1.val()"  
   valJSString :: JQuery -> IO JSString
 
 
 setValString :: JQuery -> String -> IO ()
 setValString jq = _setValString jq . toJS
 
-foreign import jscript "%1.val(%2)"
+foreign import js "%1.val(%2)"
   _setValString :: JQuery -> JSString -> IO ()
 
 -------------------------------------------------------------------------------
@@ -100,7 +100,7 @@ foreign import jscript "%1.val(%2)"
 getHTML :: JQuery -> IO String
 getHTML = fromJSM . _getHTML
 
-foreign import jscript "%1.html()"
+foreign import js "%1.html()"
   _getHTML :: JQuery -> IO JSString
 
 
@@ -108,10 +108,10 @@ setHTML :: JQuery -> String -> IO ()
 setHTML j s = _setHTML j (toJS s)
 
 
-foreign import jscript "%1.html(%2)"
+foreign import js "%1.html(%2)"
   _setHTML :: JQuery -> JSString -> IO ()
   
-foreign import jscript "%1.hide()"
+foreign import js "%1.hide()"
   hide :: JQuery -> IO ()
 
 addClass :: JQuery -> String -> IO ()
@@ -120,14 +120,14 @@ addClass j s = _addClass j (toJS s)
 wrapInner :: JQuery -> String -> IO ()
 wrapInner j = _wrapInner j . toJS
 
-foreign import jscript "%1.wrapInner(%2)"
+foreign import js "%1.wrapInner(%2)"
   _wrapInner :: JQuery -> JSString -> IO ()
 
  -- Or return JQuery for chaining??? Does chaining even make sense?
-foreign import jscript "%1.addClass(%2)"
+foreign import js "%1.addClass(%2)"
   _addClass :: JQuery -> JSString -> IO ()
   
-foreign import jscript "%1.remove()"
+foreign import js "%1.remove()"
   remove :: JQuery -> IO ()
 
 toggleClass :: JQuery -> String -> IO ()
@@ -136,7 +136,7 @@ toggleClass jq = _toggleClass jq . toJS
 toggleClassString :: String -> String -> IO ()
 toggleClassString sel c = jQuery sel >>= flip toggleClass c
 
-foreign import jscript "%1.toggleClass(%2)"
+foreign import js "%1.toggleClass(%2)"
   _toggleClass :: JQuery -> JSString -> IO ()
   
 -- | One or more space-separated classes to be removed from the class attribute
@@ -147,7 +147,7 @@ removeClass jq = _removeClass jq . toJS
 removeClassString :: String -> String -> IO ()
 removeClassString sel c = jQuery sel >>= flip removeClass c
 
-foreign import jscript "%1.removeClass(%2)"
+foreign import js "%1.removeClass(%2)"
   _removeClass :: JQuery -> JSString -> IO ()
 
 
@@ -164,11 +164,11 @@ slow = 600
 -- How can functions be passed? Which type should a callback function have?
 -- Generally speaking, a callback functions as would be used in show here returns
 -- void. What if we make callback functions return ()?
-foreign import jscript "%1.show()"   jqshow0  :: JQuery -> IO ()
-foreign import jscript "%1.show(%*)" jqshow1  :: JQuery -> Int -> IO ()
-foreign import jscript "%1.show(%*)" jqshow2  :: JQuery -> Int -> JSString -> IO ()
-foreign import jscript "%1.show(%*)" jqshow2' :: JQuery -> Int -> IO () -> IO ()
-foreign import jscript "%1.show(%*)" jqshow3  :: JQuery -> Int -> JSString -> IO () -> IO ()
+foreign import js "%1.show()"   jqshow0  :: JQuery -> IO ()
+foreign import js "%1.show(%*)" jqshow1  :: JQuery -> Int -> IO ()
+foreign import js "%1.show(%*)" jqshow2  :: JQuery -> Int -> JSString -> IO ()
+foreign import js "%1.show(%*)" jqshow2' :: JQuery -> Int -> IO () -> IO ()
+foreign import js "%1.show(%*)" jqshow3  :: JQuery -> Int -> JSString -> IO () -> IO ()
 
 jqshow :: JQuery -> Maybe Int -> Maybe String -> Maybe (IO ()) -> IO ()
 jqshow j Nothing  Nothing  Nothing  = jqshow0  j
@@ -178,7 +178,7 @@ jqshow j (Just n) Nothing  (Just c) = jqshow2' j n c
 jqshow j (Just n) (Just e) (Just c) = jqshow3  j n (toJS e) c
 
 
-foreign import jscript "%1.blur()"
+foreign import js "%1.blur()"
   doBlur :: JQuery -> IO ()
 
 -------------------------------------------------------------------------------
@@ -240,7 +240,7 @@ bind :: JQuery -> JEventType -> EventHandler -> IO ()
 bind jq event eh = do handler <- mkJEventHandler eh
                       _bind jq ((toJS . show)event) handler
 
-foreign import jscript "%1.bind(%*)"
+foreign import js "%1.bind(%*)"
   _bind :: JQuery -> JSString -> JEventHandler -> IO ()
   
 registerEvents :: [(String, JEventType, EventHandler)] -> IO ()
@@ -251,7 +251,7 @@ registerEvents = mapM_ (\ (e, event, eh) -> do elem <- jQuery e
 unbind :: JQuery -> JEventType -> IO ()
 unbind jq = _unbind jq . toJS . show
 
-foreign import jscript "%1.unbind(%*)"
+foreign import js "%1.unbind(%*)"
   _unbind :: JQuery -> JSString -> IO ()
 
 
@@ -262,7 +262,7 @@ blur = undefined
 click :: JQuery -> EventHandler -> IO ()
 click jq eh = mkJEventHandler eh >>= _click jq
 
-foreign import jscript "%1.click(%2)"
+foreign import js "%1.click(%2)"
   _click :: JQuery -> JEventHandler -> IO ()
 
 
@@ -273,14 +273,14 @@ keypress = undefined
 onDocumentReady :: JSFunPtr (IO ()) -> IO ()
 onDocumentReady f = _ready f
 
-foreign import jscript "$('document').ready(%1)"
+foreign import js "$('document').ready(%1)"
   _ready :: JSFunPtr (IO ()) -> IO ()
   
-foreign import jscript "wrapper"
+foreign import js "wrapper"
   mkJEventHandler :: EventHandler -> IO JEventHandler
     
   
-foreign import jscript "wrapper"
+foreign import js "wrapper"
   _mkJThisEventHandler :: ThisEventHandler -> IO JThisEventHandler
   
 mkJThisEventHandler :: ThisEventHandler -> IO JThisEventHandler
@@ -289,11 +289,11 @@ mkJThisEventHandler f =
                       f jQThis jq
    in _mkJThisEventHandler g
   
-foreign import jscript "wrappedThis(%1)"
+foreign import js "wrappedThis(%1)"
   wrappedJQueryEvent :: JThisEventHandler -> IO JEventHandler
   
   
-foreign import jscript "wrapper"
+foreign import js "wrapper"
   mkJUIEventHandler :: UIEventHandler -> IO JUIEventHandler
  
  
@@ -303,11 +303,11 @@ mkJUIThisEventHandler f =
                          f jQThis jq ui
   in _mkJUIThisEventHandler g  
   
-foreign import jscript "wrapper"
+foreign import js "wrapper"
   _mkJUIThisEventHandler :: UIThisEventHandler -> IO JUIThisEventHandler
   
   
-foreign import jscript "wrappedThis(%1)"
+foreign import js "wrappedThis(%1)"
   wrappedJQueryUIEvent :: JUIThisEventHandler -> IO JUIEventHandler
   
 -------------------------------------------------------------------------------
@@ -320,13 +320,13 @@ appendString :: JQuery -> String -> IO ()
 appendString jq str = do jq' <- jQuery str
                          _append jq jq'
 
-foreign import jscript "%1.append(%*)"
+foreign import js "%1.append(%*)"
   _append :: JQuery -> JQuery -> IO ()
 
 replaceWith :: JQuery -> JQuery -> IO ()
 replaceWith = _replaceWith
 
-foreign import jscript "%1.replaceWith(%2)"
+foreign import js "%1.replaceWith(%2)"
   _replaceWith :: JQuery -> JQuery -> IO ()
   
 replaceWithString :: JQuery -> String -> IO ()

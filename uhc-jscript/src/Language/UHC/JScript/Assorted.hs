@@ -7,5 +7,5 @@ import Language.UHC.JScript.Primitives
 alert :: String -> IO ()
 alert = _alert . toJS
 
-foreign import jscript "alert(%*)"
+foreign import js "alert(%*)"
   _alert :: JSString -> IO ()

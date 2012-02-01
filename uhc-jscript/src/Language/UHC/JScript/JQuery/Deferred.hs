@@ -13,11 +13,11 @@ boundExecution calc fallback timeout onCalc onFallback = do
   _boundExecution calc' fallback' timeout onCalc' onFallback'
 
 
-foreign import jscript "boundExecution(%*)"
+foreign import js "boundExecution(%*)"
   _boundExecution :: JSFunPtr (IO a) -> JSFunPtr (IO a) -> Int -> JSFunPtr (a -> IO b) -> JSFunPtr (a -> IO b) -> IO ()
   
-foreign import jscript "wrapper"
+foreign import js "wrapper"
   wrapIOa :: IO a -> IO (JSFunPtr (IO a))
   
-foreign import jscript "wrapper"
+foreign import js "wrapper"
   wrapaIOb :: (a -> IO b) -> IO (JSFunPtr (a -> IO b))

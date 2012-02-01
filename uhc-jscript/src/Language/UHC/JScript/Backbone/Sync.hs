@@ -8,13 +8,13 @@ import Language.UHC.JScript.Types
 sync :: String -> BBModel a -> IO ()
 sync s = _sync (toJS s)
 
-foreign import jscript "Backbone.sync(%*)"
+foreign import js "Backbone.sync(%*)"
   _sync :: JSString -> BBModel a -> IO ()
 
 sync' :: String -> BBModel a -> AnonObj -> IO ()
 sync' s = _sync' (toJS s)
 
-foreign import jscript "Backbone.sync(%*)"
+foreign import js "Backbone.sync(%*)"
   _sync' :: JSString -> BBModel a -> AnonObj -> IO ()
 
 -- TODO: emulateHTTP

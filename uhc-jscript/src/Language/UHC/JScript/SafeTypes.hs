@@ -2,7 +2,7 @@ module Language.UHC.JScript.SafeTypes where
 
 import Language.UHC.JScript.ECMA.String (JSString)
 
-foreign import jscript "typeof(%1)"
+foreign import js "typeof(%1)"
   typeof :: a -> JSString
 
 -- | Would like fun dep here
